@@ -1,0 +1,562 @@
+declare module FakeExcelTest {
+    function testRequestMessage(): void;
+    function testFakeResponse(): void;
+    function testSimpleRequest(): void;
+    function testUnicode(): void;
+    function testWorkbook(): void;
+    function testUpdateValue(): void;
+    function testUpdateText(): void;
+    function testObjectNewAndObjectAsParameter(): void;
+    function testArrayValue(): void;
+    function testValue2DArray(): void;
+    function testText2DArray(): void;
+    function testValueArray2(): void;
+    function testErrorWorksheet(): void;
+    function testErrorWorksheet2(): void;
+    function testErrorWorksheet2_rest(): void;
+    function testErrorMethodAccessDenied(): void;
+    function testErrorMethodBounds(): void;
+    function testErrorMethod2Abort(): void;
+    function testErrorMethod2AccessDenied(): void;
+    function testObjectCount(): void;
+    function testObjectCountSimple(): void;
+    function testTraceFailure(): void;
+    function testWorksheetCollection(): void;
+    function testWorksheetCollectionThenOneItem(): void;
+    function testWorksheetCollectionActiveWorksheetActiveCell(): void;
+    function testWorksheetCollectionAdd(): void;
+    function testWorksheetCollection_rest(): void;
+    function worksheetCollectionAddMethod_rest(appendAdd: boolean, appendDollar: boolean): void;
+    function testWorksheetCollectionAdd_rest(): void;
+    function testWorksheetCollectionAddMethod_rest(): void;
+    function testWorksheetCollectionAddMethodDollar_rest(): void;
+    function testActiveCell(): void;
+    function testActiveCellInvalidAfterRequest(): void;
+    function logError(error: Error): void;
+    function reportError(error: Error): void;
+    function reportAjaxError(jqXHR: JQueryXHR): void;
+    function testGetSheets_rest(): void;
+    function testPatchRange_rest(): void;
+    function testPatchRange2_rest(): void;
+    function testGetActiveSheet(): void;
+    function testGetActiveSheet_rest(): void;
+    function testGetChart(): void;
+    function testGetCharts(): void;
+    function testGetChartsAndThenUpdate(): void;
+    function testCreateChart(): void;
+    function testCreateChartAndThenUpdateChart(): void;
+    function testCreateChartAndThenUpdateChart2(): void;
+    function testUpdateChart(): void;
+    function testDeleteChart(): void;
+    function testGetCharts_rest(): void;
+    function testGetChartByName_rest(): void;
+    function testGetChartByName2_rest(): void;
+    function testGetChartByInt_rest(): void;
+    function testPatchChart_rest(): void;
+    function testGetChartByType_rest(): void;
+    function testGetChartByType2_rest(): void;
+    function testGetChartByTypeTitle_rest(): void;
+    function testCreateChart_rest(): void;
+    function testDeleteChart_rest(): void;
+    function testGetAddChart_rest(): void;
+    function testPatchAddChart_rest(): void;
+    function testDeleteAddChart_rest(): void;
+    function testSomeAction_rest(): void;
+    function testSomeAction2_rest(): void;
+    function testNullable1(): void;
+    function testNullable2(): void;
+    function testKeepReference0(): void;
+    function testKeepReference1(): void;
+    function testKeepReference2(): void;
+    function testKeepReferenceNoLoad(): void;
+    function testChartsTop(): void;
+    function testChartsTopSkip(): void;
+    function testChartsTopSkipEnd(): void;
+    function testWorksheetsTop(): void;
+    function testWorksheetsTopSkip(): void;
+    function testWorksheetsTopSkipEnd(): void;
+    function testExpand(): void;
+    function testExpand_rest(): void;
+    function testSelectExpand(): void;
+    function testSelectExpandWithoutExpand(): void;
+    function testSelectExpandWithoutExpand2(): void;
+    function testSelectExpandError(): void;
+    function testSelectExpand_rest(): void;
+    function testNotLoaded(): void;
+    function testOnAccessSetProperty(): void;
+    function testOnAccessLoad(): void;
+    function testOnAccessMethod(): void;
+    function testChartsForEach(): void;
+    function testChartsForEachPageRead(): void;
+    function testChartsForEachPageReadWrite(): void;
+    function forEachPageAsync(collection: any, pageSize: number, action: (items: Array<any>) => OfficeExtension.IPromise<any>): OfficeExtension.IPromise<any>;
+    function forEachPageAsyncOnePage(collection: any, top: number, skip: number, action: (items: Array<any>) => OfficeExtension.IPromise<any>): OfficeExtension.IPromise<any>;
+    function testParamValidationBool(): void;
+    function testParamValidationInt(): void;
+    function testParamValidationDouble(): void;
+    function testParamValidationDouble2(): void;
+    function testParamValidationString(): void;
+    function testParamValidationRange(): void;
+    function testObjectPathExp(): void;
+    function testObjectPathInvalid(): void;
+    function testInvalidDispatchParameter(): void;
+    function testInvalidClientContext(): void;
+    function testPromisesExecuteAsync(): void;
+    function testEnumArray(): void;
+    function testWacFind(): void;
+    function testRequestFlagHack1(): void;
+    function testRequestFlagHack2(): void;
+    function testNullRange(): void;
+    function testRange_rest(): void;
+    function testNullRangeGet_rest(): void;
+    function testNullRangePatch_rest(): void;
+    function testNullRangeDelete_rest(): void;
+    function testNullChartDelete_rest(): void;
+    function testVoidMethod_rest(): void;
+    function testScalarMethod_rest(): void;
+    function testBlockedMethodKeepReference_rest(): void;
+    function testBlockedMethodNotRest_rest(): void;
+    function testBlockedMethodIndexer_rest(): void;
+    function testBlockedProperty_rest(): void;
+    function testExcludedProperty_rest(): void;
+    function testExcludedProperty2_rest(): void;
+    function testPostToPrimitiveProperty_rest(): void;
+    function testPatchToPrimitiveProperty_rest(): void;
+    function testPostToObjectProperty_rest(): void;
+    function testPostToFunction_rest(): void;
+    function testMethodParameter_rest(): void;
+    function testMethodParameterInvalid_rest(): void;
+    function testExecuteAsyncShortCircuits(): void;
+    function testExecuteAsyncAllowsValuePassThrough1(): void;
+    function testExecuteAsyncAllowsValuePassThrough2(): void;
+    function testExecuteAsyncAllowsValuePassThrough3(): void;
+    function testUrlPathEncode(): void;
+    function testUrlKeyValueDecode(): void;
+    function test_stream_basic(): void;
+    function test_matrix_basic(): void;
+    function testReferencesAddRemoveArrayOfRefs(): void;
+    function test_run_basic(): void;
+    function test_run_previousAndSubsequentRefCountsGetReflected(): void;
+    function test_run_failsIfDontReturnPromise1(): void;
+    function test_run_failsIfDontReturnPromise2(): void;
+    function test_run_failsIfDontReturnPromise3(): void;
+    function test_run_throwsCorrectly1(): void;
+    function test_run_throwsCorrectly2(): void;
+    function test_run_invalidatesReferencedObject1(): void;
+    function test_run_invalidatesReferencedObject2(): void;
+    function test_run_invalidatesReferencedObject3(): void;
+    function test_run_canKeepReferenceExplicitly(): void;
+    function test_run_doesFinalSyncEvenIfUserForgot(): void;
+    function test_run_emulateFailureOnInitialClenaups(): void;
+    function test_run_emulateCleanupFailure(): void;
+    function testRestOnly_rest(): void;
+    function test_complextype_load_JScript(): void;
+    function test_complextype_get_REST(): void;
+    function test_complextype_arrayinput_JScript(): void;
+    function test_complextype_arrayinput_REST(): void;
+    function test_complextype_mixedArrayInput_JScript(): void;
+    function test_complextype_mixedArrayInputODataType_JScript(): void;
+    function test_complextype_mixedArrayInput_REST(): void;
+    function test_complextype_propertyset_JScript(): void;
+    function test_complextype_methodreturn_JScript(): void;
+    function test_complextype_methodreturn_REST(): void;
+    function test_complextype_methodreturn2_JScript(): void;
+    function test_complextype_methodreturn2_REST(): void;
+    function test_range_parameter_REST(): void;
+    function test_range_parameter2_REST(): void;
+    function test_application_hasbase_JScript(): void;
+    function test_Promise_exposedPromiseWorks_JScript(): void;
+}
+declare module OfficeExtension {
+    class FakeResponseRequestExecutor implements IRequestExecutor {
+        private m_responseText;
+        constructor(responseText: string);
+        executeAsync(customData: string, requestFlags: number, requestMessage: IRequestExecutorRequestMessage, callback: (responseMessage: IRequestExecutorResponseMessage) => void): void;
+    }
+}
+declare module FakeExcelApi {
+    /**
+     *
+     * Chart type
+     */
+    module ChartType {
+        /**
+         *
+         * Not specified
+         */
+        var none: string;
+        /**
+         *
+         * Pie chart
+         */
+        var pie: string;
+        /**
+         *
+         * Bar chart
+         */
+        var bar: string;
+        /**
+         *
+         * Line chart
+         */
+        var line: string;
+        /**
+         *
+         * 3D chart
+         */
+        var _3DBar: string;
+    }
+    module RangeValueType {
+        var unknown: string;
+        var empty: string;
+        var string: string;
+        var integer: string;
+        var double: string;
+        var boolean: string;
+        var error: string;
+    }
+    class Application extends OfficeExtension.ClientObject {
+        private m_activeWorkbook;
+        private m_hasBase;
+        private m_testWorkbook;
+        activeWorkbook: FakeExcelApi.Workbook;
+        testWorkbook: FakeExcelApi.TestWorkbook;
+        hasBase: boolean;
+        _GetObjectByReferenceId(referenceId: string): OfficeExtension.ClientResult<any>;
+        _GetObjectTypeNameByReferenceId(referenceId: string): OfficeExtension.ClientResult<string>;
+        _RemoveReference(referenceId: string): void;
+        /** Handle results returned from the document
+         * @private
+         */
+        _handleResult(value: any): void;
+        /**
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
+         */
+        load(option?: string | string[] | OfficeExtension.LoadOption): FakeExcelApi.Application;
+    }
+    class Chart extends OfficeExtension.ClientObject {
+        private m_chartType;
+        private m_id;
+        private m_imageData;
+        private m_name;
+        private m_nullableChartType;
+        private m_nullableShowLabel;
+        private m_title;
+        chartType: string;
+        id: number;
+        imageData: string;
+        name: string;
+        nullableChartType: string;
+        nullableShowLabel: boolean;
+        title: string;
+        /**
+         *
+         * Delete the chart
+         *
+         */
+        delete(): void;
+        getAsImage(large: boolean): OfficeExtension.ClientResult<string>;
+        /** Handle results returned from the document
+         * @private
+         */
+        _handleResult(value: any): void;
+        /**
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
+         */
+        load(option?: string | string[] | OfficeExtension.LoadOption): FakeExcelApi.Chart;
+    }
+    /**
+     *
+     * Chart collection
+     */
+    class ChartCollection extends OfficeExtension.ClientObject {
+        private m_count;
+        private m__items;
+        /** Gets the loaded child items in this collection. */
+        items: Array<FakeExcelApi.Chart>;
+        /**
+         *
+         * Gets the number of charts
+         */
+        count: number;
+        /**
+         *
+         * Add a new chart to the collection
+         *
+         * @param name The name of the chart to be added
+         * @param chartType The type of the chart to be added
+         * @returns The newly added chart
+         */
+        add(name: string, chartType: string): FakeExcelApi.Chart;
+        /**
+         *
+         * Get the chart at the index
+         *
+         * @param index The index
+         * @returns The chart at the index
+         */
+        getItem(index: any): FakeExcelApi.Chart;
+        /**
+         *
+         * Get the chart at the position
+         *
+         * @param ordinal The position
+         * @returns The chart at the position
+         */
+        getItemAt(ordinal: number): FakeExcelApi.Chart;
+        /** Handle results returned from the document
+         * @private
+         */
+        _handleResult(value: any): void;
+        /**
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
+         */
+        load(option?: string | string[] | OfficeExtension.LoadOption): FakeExcelApi.ChartCollection;
+    }
+    module ErrorMethodType {
+        var none: string;
+        var accessDenied: string;
+        var stateChanged: string;
+        var bounds: string;
+        var abort: string;
+    }
+    class TestWorkbook extends OfficeExtension.ClientObject {
+        private m_errorWorksheet;
+        private m_errorWorksheet2;
+        /**
+         *
+         * When this property is accessed, the server will return errorCode E_CHANGED_STATE
+         */
+        errorWorksheet: FakeExcelApi.Worksheet;
+        /**
+         *
+         * When this property is accessed, the server will return errorCode
+         */
+        errorWorksheet2: FakeExcelApi.Worksheet;
+        /**
+         *
+         * When this method is invoked, the server will return errorCode. The errorCode is dependent on the ErrorMethodType input.
+         *
+         * @param input
+         * @returns
+         */
+        errorMethod(input: string): OfficeExtension.ClientResult<string>;
+        /**
+         *
+         * When this method is invoked, the server will return errorCode. The errorCode is dependent on the ErrorMethodType input.
+         *
+         * @param input
+         * @returns
+         */
+        errorMethod2(input: string): OfficeExtension.ClientResult<string>;
+        getActiveWorksheet(): FakeExcelApi.Worksheet;
+        /**
+         *
+         * Get the total count of active cached range data objects
+         *
+         * @returns
+         */
+        getCachedObjectCount(): OfficeExtension.ClientResult<number>;
+        getNullableBoolValue(nullable: boolean): OfficeExtension.ClientResult<boolean>;
+        getNullableEnumValue(nullable: boolean): OfficeExtension.ClientResult<string>;
+        /**
+         *
+         * Get the total count of active COM objects
+         *
+         * @returns
+         */
+        getObjectCount(): OfficeExtension.ClientResult<number>;
+        testNullableInputValue(chartType: string, boolValue: boolean): OfficeExtension.ClientResult<string>;
+        /** Handle results returned from the document
+         * @private
+         */
+        _handleResult(value: any): void;
+        /**
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
+         */
+        load(option?: string | string[] | OfficeExtension.LoadOption): FakeExcelApi.TestWorkbook;
+    }
+    class Workbook extends OfficeExtension.ClientObject {
+        private m_activeWorksheet;
+        private m_charts;
+        private m_sheets;
+        activeWorksheet: FakeExcelApi.Worksheet;
+        charts: FakeExcelApi.ChartCollection;
+        sheets: FakeExcelApi.WorksheetCollection;
+        getChartByType(chartType: string): FakeExcelApi.Chart;
+        getChartByTypeTitle(chartType: string, title: string): FakeExcelApi.Chart;
+        someAction(intVal: number, strVal: string, enumVal: string): OfficeExtension.ClientResult<string>;
+        /** Handle results returned from the document
+         * @private
+         */
+        _handleResult(value: any): void;
+        /**
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
+         */
+        load(option?: string | string[] | OfficeExtension.LoadOption): FakeExcelApi.Workbook;
+    }
+    class Worksheet extends OfficeExtension.ClientObject {
+        private m_calculatedName;
+        private m_name;
+        private m__Id;
+        getActiveCell(): FakeExcelApi.Range;
+        getActiveCellInvalidAfterRequest(): FakeExcelApi.Range;
+        calculatedName: string;
+        name: string;
+        _Id: number;
+        nullChart(address: string): FakeExcelApi.Chart;
+        nullRange(address: string): FakeExcelApi.Range;
+        range(address: string): FakeExcelApi.Range;
+        someRangeOperation(input: string, range: FakeExcelApi.Range): OfficeExtension.ClientResult<string>;
+        _RestOnly(): OfficeExtension.ClientResult<string>;
+        /** Handle results returned from the document
+         * @private
+         */
+        _handleResult(value: any): void;
+        /**
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
+         */
+        load(option?: string | string[] | OfficeExtension.LoadOption): FakeExcelApi.Worksheet;
+    }
+    class WorksheetCollection extends OfficeExtension.ClientObject {
+        private m__items;
+        /** Gets the loaded child items in this collection. */
+        items: Array<FakeExcelApi.Worksheet>;
+        add(name: string): FakeExcelApi.Worksheet;
+        findSheet(text: string): FakeExcelApi.Worksheet;
+        getActiveWorksheetInvalidAfterRequest(): FakeExcelApi.Worksheet;
+        getItem(index: any): FakeExcelApi.Worksheet;
+        _GetItem(index: any): FakeExcelApi.Worksheet;
+        /** Handle results returned from the document
+         * @private
+         */
+        _handleResult(value: any): void;
+        /**
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
+         */
+        load(option?: string | string[] | OfficeExtension.LoadOption): FakeExcelApi.WorksheetCollection;
+    }
+    class Range extends OfficeExtension.ClientObject {
+        private m_columnIndex;
+        private m_logText;
+        private m_rowIndex;
+        private m_sort;
+        private m_text;
+        private m_textArray;
+        private m_value;
+        private m_valueArray;
+        private m_valueArray2;
+        private m_valueTypes;
+        private m__ReferenceId;
+        someCustomMethod(): void;
+        sort: FakeExcelApi.RangeSort;
+        columnIndex: number;
+        logText: string;
+        rowIndex: number;
+        text: string;
+        textArray: Array<Array<string>>;
+        value: any;
+        valueArray: Array<Array<any>>;
+        valueArray2: Array<string>;
+        valueTypes: Array<Array<string>>;
+        _ReferenceId: string;
+        activate(): void;
+        getValueArray2(): OfficeExtension.ClientResult<Array<string>>;
+        notRestMethod(): OfficeExtension.ClientResult<number>;
+        replaceValue(newValue: any): OfficeExtension.ClientResult<any>;
+        setValueArray2(valueArray: Array<string>, text: string): void;
+        _KeepReference(): void;
+        /** Handle results returned from the document
+         * @private
+         */
+        _handleResult(value: any): void;
+        /**
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
+         */
+        load(option?: string | string[] | OfficeExtension.LoadOption): FakeExcelApi.Range;
+        _initReferenceId(value: string): void;
+    }
+    class TestCaseObject extends OfficeExtension.ClientObject {
+        calculateAddressAndSaveToRange(street: string, city: string, range: FakeExcelApi.Range): OfficeExtension.ClientResult<string>;
+        matrixSum(matrix: Array<Array<any>>): OfficeExtension.ClientResult<number>;
+        sum(...values: Array<any>): OfficeExtension.ClientResult<number>;
+        testParamBool(value: boolean): OfficeExtension.ClientResult<boolean>;
+        testParamDouble(value: number): OfficeExtension.ClientResult<number>;
+        testParamFloat(value: number): OfficeExtension.ClientResult<number>;
+        testParamInt(value?: number): OfficeExtension.ClientResult<number>;
+        testParamRange(value: FakeExcelApi.Range): FakeExcelApi.Range;
+        testParamString(value?: string): OfficeExtension.ClientResult<string>;
+        testUrlKeyValueDecode(value: string): OfficeExtension.ClientResult<string>;
+        testUrlPathEncode(value: string): OfficeExtension.ClientResult<string>;
+        /** Handle results returned from the document
+         * @private
+         */
+        _handleResult(value: any): void;
+        /**
+         * Create a new instance of FakeExcelApi.TestCaseObject object
+         */
+        static newObject(context: OfficeExtension.ClientRequestContext): FakeExcelApi.TestCaseObject;
+    }
+    class RangeSort extends OfficeExtension.ClientObject {
+        private m_fields;
+        private m_fields2;
+        private m_queryField;
+        fields: Array<FakeExcelApi.SortField>;
+        fields2: Array<any>;
+        queryField: FakeExcelApi.QueryWithSortField;
+        apply(fields: Array<FakeExcelApi.SortField>): OfficeExtension.ClientResult<string>;
+        applyAndReturnFirstField(fields: Array<FakeExcelApi.SortField>): OfficeExtension.ClientResult<FakeExcelApi.SortField>;
+        applyMixed(fields: Array<any>): OfficeExtension.ClientResult<number>;
+        applyQueryWithSortFieldAndReturnLast(fields: Array<FakeExcelApi.QueryWithSortField>): OfficeExtension.ClientResult<FakeExcelApi.QueryWithSortField>;
+        /** Handle results returned from the document
+         * @private
+         */
+        _handleResult(value: any): void;
+        /**
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
+         */
+        load(option?: string | string[] | OfficeExtension.LoadOption): FakeExcelApi.RangeSort;
+    }
+    interface SortField {
+        assending: boolean;
+        columnIndex: number;
+        useCurrentCulture?: boolean;
+    }
+    interface QueryWithSortField {
+        field: FakeExcelApi.SortField;
+        rowLimit: number;
+    }
+    module ErrorCodes {
+        var aborted2: string;
+        var accessDenied: string;
+        var accessDenied2: string;
+        var conflict: string;
+        var conflict2: string;
+        var generalException: string;
+        var invalidArgument: string;
+        var outOfRange: string;
+    }
+}
+declare module FakeExcelApi {
+    class ExcelClientRequestContext extends OfficeExtension.ClientRequestContext {
+        private m_application;
+        constructor(url?: string);
+        application: Application;
+    }
+    function run<T>(batch: (ctx: FakeExcelApi.ExcelClientRequestContext) => OfficeExtension.IPromise<T>): OfficeExtension.IPromise<T>;
+}
+declare module OfficeExtensionTest {
+    class InProcRequestExecutor implements OfficeExtension.IRequestExecutor {
+        executeAsync(customData: string, requestFlags: number, requestMessage: OfficeExtension.IRequestExecutorRequestMessage, callback: (responseMessage: OfficeExtension.IRequestExecutorResponseMessage) => void): void;
+    }
+    function inProcExecuteRichApiRequestAsync(messageSafearray: Array<any>, callback: (result: OSF.DDA.RichApi.ExecuteRichApiRequestResult) => void): void;
+}
+declare module OfficeExtensionTest {
+    class PostMessageRequestExecutor implements OfficeExtension.IRequestExecutor {
+        private static s_messageId;
+        private static s_frameId;
+        private static s_callbackMap;
+        private static ensureInit();
+        executeAsync(customData: string, requestFlags: number, requestMessage: OfficeExtension.IRequestExecutorRequestMessage, callback: (responseMessage: OfficeExtension.IRequestExecutorResponseMessage) => void): void;
+    }
+}

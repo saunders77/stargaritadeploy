@@ -1,0 +1,79 @@
+declare module RichApiTest {
+    interface RestRequestInfo {
+        method?: string;
+        url: string;
+        body?: string;
+        headers?: {
+            [headerName: string]: string;
+        };
+    }
+    interface RestResponseInfo {
+        statusCode: number;
+        headers: {
+            [headerName: string]: string;
+        };
+        body: string;
+    }
+    class RestUtility {
+        static httpStatusOK: number;
+        static httpStatusCreated: number;
+        static httpStatusNoContent: number;
+        static httpStatusBadRequest: number;
+        static httpStatusNotFound: number;
+        static httpStatusMethodNotAllowed: number;
+        static httpMethodGet: string;
+        static httpMethodPost: string;
+        static httpMethodPatch: string;
+        static httpMethodDelete: string;
+        static getBaseUrlUsingOverride(defaultBaseUrl: string): string;
+        static updateRequestInfoUsingProxyIfNecessary(request: RestRequestInfo): void;
+        static invoke(request: RestRequestInfo): OfficeExtension.IPromise<RestResponseInfo>;
+        static verifyStatusCodeThrow(respInfo: RestResponseInfo, expectedCode?: number): void;
+        static verifyStatusCode(respInfo: RestResponseInfo, expectedCode?: number): boolean;
+        private static logRestResponse(respInfo);
+        private static parseHeaders(allResponseHeaders);
+    }
+    class Settings {
+        constructor();
+        timeoutSeconds: number;
+    }
+    class Logger {
+        currentTestName: string;
+        comment(message: string): void;
+        clear(): void;
+        clearDone(): void;
+        done(success: boolean): void;
+        fail(message?: string): void;
+        pass(message?: string): void;
+    }
+    var log: Logger;
+    var settings: Settings;
+    function buildUI(parent: HTMLDivElement, testNs: string, intellisensePaths?: string[]): void;
+    var groups: Array<string>;
+    var testVersions: Array<string>;
+    function appendTests(ns: string): void;
+    function arrayPushUnique(arr: Array<string>, item: string): boolean;
+    function arrayPushUniqueWithKey(arr: Array<string>, item: string, key: string): boolean;
+    function toggleCurrentGroupSelection(): void;
+    function toggleCheckboxFilters(): void;
+    function hideAllTestGroups(): void;
+    function showAllTestGroups(): void;
+    function toggleAllTestButtons(): void;
+    function invokeScriptEditorRunButton(): void;
+    function setNewScript(testNs: string): void;
+    function invokeRest(): void;
+    function invokeOneTest(testName: string, funcName: string): void;
+    function clearAllTestResult(): void;
+    function invokeAllTests(): void;
+    function invokeTestsWithKeywords(): void;
+    function pasteOAuthToken(): void;
+    function initGraphSettings(): void;
+}
+declare module MonacoEditorIntegration {
+    var textAreaId: string;
+    function initializeJsEditor(textAreaId: string, intellisensePaths: string[]): void;
+    function getEditorValue(): string;
+    function getEditorTextAsJavaScript(): any;
+    function setEditorValue(text: string): void;
+    function resizeEditor(scrollUp?: boolean): void;
+}

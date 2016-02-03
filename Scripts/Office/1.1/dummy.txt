@@ -1,0 +1,4 @@
+DON'T DELETE THIS FILE
+
+This is a dummy file to ensure that the depot/lab recognizes (and copies) this folder, 
+which is later populated with the latest copies of office.js directly from the osfweb target output.

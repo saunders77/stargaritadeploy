@@ -1,0 +1,4 @@
+﻿declare module WordTest {
+	export function reportError(errorInfo: OfficeExtension.ErrorInfo): void {
+	}
+}

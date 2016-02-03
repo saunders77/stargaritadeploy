@@ -1,0 +1,50 @@
+﻿2015-07-16 09:32:37.7130 STH.EXE                           
+2015-07-16 09:32:37.7210 STH.EXE                           sth (sth.exe)
+Version 16.0.6008.1000 x64 ship
+Copyright © 2016 Microsoft Corporation.  All rights reserved.
+"C:\Program Files\MOTIF\16\Bin\sth.exe" -?
+ 
+2015-07-16 09:32:37.7220 STH.EXE                           
+2015-07-16 09:32:37.7240 STH.EXE                           _______________________________________________________________________________ 
+2015-07-16 09:32:37.7240 STH.EXE                           sth.exe can be used to run tests, list tests and create or convert MOTIF scenario files.
+ 
+2015-07-16 09:32:37.7290 STH.EXE                           sth.exe [execution mode] [mode_specific_args]
+
+Execution Modes:
+    run     (Default) Run tests. See 'sth.exe run -?'.
+    list    List all matching tests. See 'sth.exe list -?'.
+    create  Create a MOTIF Scenario file (*.scn). See 'sth.exe create -?'."
+    convert Convert a MOTIF Scenario file (*.scn). See 'sth.exe convert -?'."
+ 
+2015-07-16 09:32:37.7290 STH.EXE                           _______________________________________________________________________________ 
+2015-07-16 09:32:37.7310 STH.EXE                           Current Execution Mode : Run 
+2015-07-16 09:32:37.7390 STH.EXE                           
+Usage:
+sth.exe [run] [-a] [-as] [-na] [-nologo] [-w] [-?] [-n] [-e] [-el] [-noel] [-im] [-unid] [-unim [<deviceIPAddress>]] [-droid [<deviceIPAddress>]] [-b <debug|ship>] [-dp <arm|x86|droidarm|droidx86>] [-ep <arm|droidarm|x86|droidx86|x64>] [-ut] [-q] [-cl <rootCachePath>] [-l <logSettingsPath>] [-s <showLogPath>] [-topslowest <N>] [-d <TestDirectory>] [-t <class,assembly>] [-i <FileList>] [-f [ <type:values>]+] [-mwc] [<ScnFile>] [<TsdFile>] [<TestBinary>] 
+
+Arguments:
+    -a                                  Pause test execution to attach a debugger.
+    -as                                 Pause execution to attach a debugger to STH.
+    -na                                 Pause test execution to attach a debugger to sth.exe for a native desktop test binary or to Motif.NativeUnitTestHost.exe for an immersive test binary.
+    -nologo                             Suppress display of banner information.
+    -w                                  Wait before exiting.
+    -?                                  Display this help.
+    -n                                  To disable automatic loading of file depots.
+    -e                                  Enable automatic loading of file depots.
+    -el                                 Enable execution of elevated code.
+    -noel                               Disable execution of elevated code.
+    -im                                 Enable execution of immersive tests.
+    -unid                               Enable execution of Windows Desktop Universal App tests.
+    -unim [<deviceIPAddress>]           Enable execution of Windows Mobile Universal App tests.
+    -droid [<deviceIPAddress>]          Enable execution of Android device tests.
+    -b <debug|ship>                     Build type to run. Use for setting FileDepot.
+    -dp <arm|x86|droidarm|droidx86>     Obsolete. Use -ep instead.
+    -ep <arm|droidarm|x86|droidx86|x64> Endpoint processor to use. Use for setting FileDepot.
+    -ut                                 Changes STH behavior to better support unit tests.
+    -q                                  Quiet mode reduces console logging output.
+    -cl <rootCachePath>                 Cache directory for test support files and dependencies
+    -l <logSettingsPath>                XML file containing a serialized LogSettings object.
+    -s <showLogPath>                    Log file that should be displayed after execution.
+    -topslowest <N>                     Display the top N slowest tests. Default is 3.
+    -d <TestDirectory>                  Path to test directory.
+    -t <class,assembly>                 Run only the TestClass in the given assembly. Managed test classes should include the full namespace. Native tests should only have the class nam

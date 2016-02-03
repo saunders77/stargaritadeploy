@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta http-equiv="Expires" content="0" />
+	<title></title>
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+	<link href="../../Content/Office.css" rel="stylesheet" type="text/css" />
+	<!--
+	<script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js" type="text/javascript"></script>
+	-->
+	<!-- To enable offline debugging using a local reference to Office.js, use:-->
+	<script src="../../Scripts/Office/MicrosoftAjax.js" type="text/javascript"></script>
+	<script src="../../Scripts/Office/1.1/office.debug.js" type="text/javascript"></script>
+
+	<!-- Scripts for enabling the Monaco text editor -->
+	<link rel="stylesheet" type="text/css" media="screen" data-name="vs/editor/editor.main" href="../../Scripts/vs/editor/editor.main.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="../../Scripts/vs/editor/css/vs-theme.css" />
+	<script type="text/javascript">
+		var require = {
+			baseUrl: "../../Scripts"
+		};
+	</script>
+	<script type="text/javascript" src="../../Scripts/vs/loader.js"></script>
+	<script type="text/javascript" src="../../Scripts/vs/editor/editor.main.nls.js"></script>
+	<script type="text/javascript" src="../../Scripts/vs/editor/editor.main.js"></script>
+	<script type="text/javascript" src="../../Scripts/vs/languages/javascript/javascript.js"></script>
+
+	<link href="../App.css" rel="stylesheet" type="text/css" />
+	<script src="../App.js" type="text/javascript"></script>
+	<script src="../Office.Runtime.js" type="text/javascript"></script>
+	<script src="../Word.js" type="text/javascript"></script>
+	<script src="../WordJsTests.js" type="text/javascript"></script>
+	<script src="../RichApiTest.Core.js" type="text/javascript"></script>
+
+	<link href="Home.css" rel="stylesheet" type="text/css" />
+	<script src="Home.js" type="text/javascript"></script>
+</head>
+<body>
+	<div id="content-main">
+		<div id="DivTests">
+			If the text editor, buttons, etc. don't load within a few seconds, make sure that you've done:
+			<br />
+			%SRCROOT%\osfclient\RichApi\Test\RichApiAgaveWeb\CopyJsFromTarget.bat
+		</div>
+		<hr />
+		<button id="get-data-from-selection">Get data from selection</button>
+		<button id="getOoxmlDataFromSelection">getOoxmlDataFromSelection</button>
+		<a href="../Prod">Prod/Edog</a>
+	</div>
+</body>
+</html>

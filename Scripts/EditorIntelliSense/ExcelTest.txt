@@ -1,0 +1,230 @@
+declare module ExcelTest {
+    function reportError(errorInfo: Error): void;
+    /**
+        For use as the final .then clause of a promise, before the .catch.  E.g.,: ".then(pass).catch(ExcelTest.reportError)"
+    */
+    function pass(): void;
+    function reportJQueryError(xhr: JQueryXHR): void;
+    class Settings {
+        baseUri: string;
+    }
+    var settings: Settings;
+    function getNewScriptText(): string;
+}
+/**
+    This RestUtility wuill eventually be merged into RichApiTest.Core in OSFClient, once we're done writing tests.
+    But for now, due to branching complexity, it's easier to accumulate everything here, then copy over to OSFClient in one go,
+    and then remove the duplication.
+*/
+declare module ExcelTest {
+    module RestUtility {
+        enum Status {
+            OK = 200,
+            Created = 201,
+            NoContent = 204,
+            BadRequest = 400,
+            NotFound = 404,
+            MethodNotAllowed = 405,
+        }
+        module Thenable {
+            /**
+             * Posts a request with a message body (e.g., posting to collection)
+             * @param relativePath - path of the action relative to the root, like "worksheets('charts')/charts"
+             * @param body - an object that will get JSON-stringified into the post message body.
+            */
+            function post(relativePath: string, body: any): () => OfficeExtension.IPromise<RichApiTest.RestResponseInfo>;
+            /**
+             * Posts a method action to a relative URL path.
+             * @param relativePath - path of the action relative to the root, like "worksheets('charts')/charts/$/add"
+             * @param mathodParameters - an object literal (not string) with parameter key-value pairs (e.g., "{ 'type': 'pie', 'sourceData': 'A1:B4' }")
+             */
+            function postAsUrlAction(relativePath: string, methodParameters?: any): () => OfficeExtension.IPromise<RichApiTest.RestResponseInfo>;
+            /** Performs a REST get based on a path */
+            function get(relativePath: string): () => OfficeExtension.IPromise<RichApiTest.RestResponseInfo>;
+            /** performs a PATCH operation on an item, passing in the specified properties */
+            function patch(id: string, properties: any): () => OfficeExtension.IPromise<RichApiTest.RestResponseInfo>;
+            /** Gets an object of type T out of the response. Optionally applies a transformation function (e.g., to get a particular property out of the body). */
+            function getBodyAsObject<T>(transform?: (obj: any) => T): (resp: RichApiTest.RestResponseInfo) => T;
+            /** Verifies that the object type matches the expected type, then pipe the object through */
+            function verifyObjectType<T>(expectedObjectType: string): (obj: T) => T;
+            /** Validates the status code of a response (throwing on invalid), and then pipes the RestResponseInfo to the next .then */
+            function validateStatus(expected: RestUtility.Status | number): (resp: RichApiTest.RestResponseInfo) => RichApiTest.RestResponseInfo;
+            /** Validates the status code of an array of responses (throwing on invalid), and then pipes the RestResponseInfo's to the next .then */
+            function validateStatuses(expected: RestUtility.Status | number): (responses: RichApiTest.RestResponseInfo[]) => RichApiTest.RestResponseInfo[];
+            function validateErrorCode(expectedCode: string): (resp: RichApiTest.RestResponseInfo) => RichApiTest.RestResponseInfo;
+            /** invoke get method for given url and validate response using promise, and then pipes void to the next .then */
+            function invokeGetAndValidateResponsePromise(relativeUrl: string, expectedValue: any, transform: (obj: any) => any): () => OfficeExtension.IPromise<void>;
+        }
+        /**
+         * invoke get method for given url and validate response using promise
+         * @param relativePath - path of the action relative to the root, like "worksheets('sheet1')".
+         * @param expectedValue - expected value in response.
+         * @param transform - transform function.
+         */
+        function invokeGetAndValidateResponsePromise(relativeUrl: string, expectedValue: any, transform: (obj: any) => any): OfficeExtension.IPromise<void>;
+        /**
+         * invoke get method for given url and validate response
+         * @param relativePath - path of the action relative to the root, like "worksheets('sheet1')".
+         * @param expectedValue - expected value in response.
+         * @param transform - transform function.
+         */
+        function invokeGetAndValidateResponse(relativeUrl: string, expectedValue: any, transform: (obj: any) => any): void;
+        /**
+         * Validates that the value and expected value are same with each other
+         */
+        function validateValue(value: any, expectedValue: any, delta?: number): void;
+        /**
+         * Ensure the disable API fails with expected error
+         * @param relativePath - path of the action relative to the root, like "worksheets('sheet1')".
+         * @param httpMethod - REST request method.
+         */
+        function ensureDisabledApiFailed(relativePath: string, httpMethod: string): void;
+        /**
+         * Posts a request with a message body (e.g., posting to collection)
+         * @param relativePath - path of the action relative to the root, like "worksheets('charts')/charts"
+         * @param body - an object that will get JSON-stringified into the post message body.
+         */
+        function post(relativePath: string, body: any): OfficeExtension.IPromise<RichApiTest.RestResponseInfo>;
+        /**
+         * Posts a method action to a relative URL path.
+         * @param relativePath - path of the action relative to the root, like "worksheets('charts')/charts/$/add"
+         * @param mathodParameters (optional) - an object literal (not string) with parameter key-value pairs (e.g., "{ 'type': 'pie', 'sourceData': 'A1:B4' }")
+         */
+        function postAsUrlAction(relativePath: string, methodParameters?: {
+            [key: string]: any;
+        }): OfficeExtension.IPromise<RichApiTest.RestResponseInfo>;
+        /** Performs a REST get based on a path */
+        function get(relativePath: string): OfficeExtension.IPromise<RichApiTest.RestResponseInfo>;
+        /** performs a PATCH operation on an item, passing in the specified properties */
+        function patch(id: string, properties: any): OfficeExtension.IPromise<RichApiTest.RestResponseInfo>;
+        /** Deletes an item either based on its "@odata.id" field. Can pass in either just the ID string, or a full object that contains this field */
+        function deleteItem(obj: string | Object): OfficeExtension.IPromise<RichApiTest.RestResponseInfo>;
+        /** Gets an object of type T out of the response. Optionally applies a transformation function (e.g., to get a particular property out of the body). */
+        function getBodyAsObject<T>(resp: RichApiTest.RestResponseInfo, transform?: (obj: any) => T): T;
+        /** Gets the "@odata.id" property from the object */
+        function getODataId(obj: any): string;
+        /** Gets the "@odata.id" property from the object */
+        function getODataType(obj: any): string;
+        /**
+            Encodes an odata literal (e.g., when a parameter is passed in to a method, as in:
+            worksheets('charts')/charts/$/add(type='pie',sourceData='a1:b4')
+    
+            While the encoding is not necessary for the simple case above, if instead of 'a1:b4' the text contained
+            an apostrope or invalid URL characters, it would need to be appropriately encoded.
+        */
+        function encodeODataLiteral(value: any): any;
+    }
+}
+declare module Util {
+    /**
+     * Calls sync and ensures that the execution failed as expected
+     * @param context - Request context
+     * @param {string} expectedErrorCode - Expected error code
+     * @param additionalValidation - (Optional) Additional error validation function, if any (e.g., to validate trace messages)
+     * @param onCompletion - (Optional) Function callback for what to do when the expected failure was received.
+           If left empty, the code will simply call RichApiTest.log.done(true) to signal the end-of-test.
+     */
+    function ensureSyncFailed(ctx: Excel.RequestContext, expectedErrorCode: string, additionalValidation?: (errorInfo: OfficeExtension.Error) => boolean, onCompletion?: () => void): void;
+    function ensureSyncFailedPromise(ctx: Excel.RequestContext, expectedErrorCode: string): OfficeExtension.IPromise<OfficeExtension.Error>;
+    function promisify<T>(action: (callback) => void): OfficeExtension.IPromise<T>;
+    function throwOfficeError(error: Office.Error): void;
+    function ensureExpectedFailure(e: Error, expectedErrorCode: string): void;
+    function wait(milliseconds: number, action?: () => void): OfficeExtension.IPromise<any>;
+    function moveSheet(sheetName: string, target: any): void;
+    /**
+        Removes all charts from the sheet, and then either calls the passed-in test function, or just returns a promise that can be chained on to another action.
+    */
+    function removeAllChartsBefore(sheetName: string, test?: () => void): OfficeExtension.IPromise<void>;
+    function clearSheetBefore(sheetName: string, test: () => void): void;
+    function clearSheetRest(sheetName: string): OfficeExtension.IPromise<any>;
+    function checkSheetExistsRunTest(ctx: Excel.RequestContext, sheetName: string, onCompletion?: () => void): void;
+    function getTableAtPosition(address: string, callback: (table: Excel.Table) => void): void;
+    /** Asserts that a statement is true, and throws (with explanation text) if the statement is false. */
+    function assert(statement: boolean, explanation?: string): void;
+    /** Asserts that a statement is true, and throws if the statement is false, using function body as explanation. */
+    function assert(statement: () => boolean): any;
+    function assertCompareArray(value: any, expected: any): void;
+    function assertCompareValues(expectedValue: any, actualValue: any, additionalComment?: string): void;
+    function assertCompareNumeric(expectedValue: number, actualValue: number, allowableMarginOfError: number, additionalComment?: string): void;
+    function compare(value: any, expected: any, delta?: number): boolean;
+    function parseStringAsNumberAndCompare(value: any, expected: any): boolean;
+    function compareProperty(object: any, propertyName: any, expected: any): boolean;
+    function compareArray(value: any, expected: any): boolean;
+    function startsWith(thisString: string, searchString: string, position?: number): boolean;
+    function isWAC(): boolean;
+    function isDesktop(): boolean;
+    function isMacOS(): boolean;
+    function isiOS(): RegExpMatchArray;
+    function isApple(): boolean | RegExpMatchArray;
+}
+declare module ExcelTest {
+    function test_Stargarita_Run_bvt_JScript_V11(): void;
+    function test_Stargarita_Run2_bvt_JScript_V11(): void;
+    function test_Stargarita_Ru124_bvt_JScript_V11(): void;
+    var gametickInMS: number;
+    var y_wall_top: number;
+    var y_wall_bottom: number;
+    var x_wall_left: number;
+    var x_wall_right: number;
+    var timer: any;
+    var wall: {
+        name: string;
+        width: number;
+        height: number;
+        y: number;
+        x: number;
+        y_v: number;
+        x_v: number;
+        y_new: number;
+        x_new: number;
+        color: string;
+        start_y: number;
+        start_x: number;
+    };
+    var gamegrid: {
+        name: string;
+        width: number;
+        height: number;
+        y: number;
+        x: number;
+        y_v: number;
+        x_v: number;
+        y_new: number;
+        x_new: number;
+        color: string;
+        start_y: number;
+        start_x: number;
+    };
+    var ball: {
+        name: string;
+        width: number;
+        height: number;
+        y: number;
+        x: number;
+        y_v: number;
+        x_v: number;
+        y_new: number;
+        x_new: number;
+        color: string;
+        start_y: number;
+        start_x: number;
+    };
+    var paddle: {
+        name: string;
+        width: number;
+        height: number;
+        y: number;
+        x: number;
+        y_v: number;
+        x_v: number;
+        y_new: number;
+        x_new: number;
+        color: string;
+        start_y: number;
+        start_x: number;
+    };
+    function moveItems(): void;
+    function processCollisions(): void;
+    function updateWindow(): void;
+    function loadItems(): void;
+}
