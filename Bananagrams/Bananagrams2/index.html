@@ -1,0 +1,365 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Bananagrams</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style type="text/css">
+        input {
+            height: 30px;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        input.btn {
+            background-color: blue;
+            color: white;
+            border: none;
+        }
+        .container {
+            background-color: #feddbc;
+            padding: 20px;
+            margin: 20px;
+            overflow: auto;
+            min-width: 345px;
+        }
+        #joinForm{
+            display: block;
+            width: 45%;
+            float: left;
+        }
+        #createForm{
+            display: block;
+            width: 45%;
+            float: right;
+        }
+        #gameDisplay {
+            height: auto;
+        }
+        #chat {
+            clear: right;
+            float: right;
+            height: 400px;
+            width: 250px;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: white;
+            border: thick solid #808080;
+            list-style-type: none;
+            list-style: none;
+        }
+        #chat li {
+            margin-top: 4px;
+        }
+        .infoSquare {
+            float: left;
+            height: 80px;
+            width: 80px;
+            text-align: center;
+            margin-right: 5px;
+            margin-bottom: 10px;
+            padding: 15px;
+            background-color: blue;
+            color: white;
+        }
+        .infoSquareTitle{
+            font-weight:bold;
+            height: 40px;
+            display: block;
+        }
+        .infoSquareValue {
+            display: block;
+        }
+        ul.wordList {
+            max-height: 400px;
+            list-style-type: none;
+            list-style: none;
+            padding: 0px 5px 0px 0px;
+            margin-top: 5px;
+        }
+        ul.wordList>li {
+            background-color: orange;
+            display: block;
+            float: left;
+            clear: left;
+        }
+        .player {
+            float: left;
+            padding-top: 10px;
+        }
+        #letterPool {
+            margin-top: 10px;
+            height: 26px;
+        }
+        .letter {
+            width: 20px;
+            height: 20px;
+            float: left;
+            line-height: 20px;
+            text-align: center;
+            vertical-align: middle;
+            font-family: Helvetica, Verdana, Arial;
+            background-color: blue;
+            color: white;
+            margin-right: 2px;
+            margin-bottom: 2px;
+        }
+        body {
+            font-family: Helvetica, Verdana, Arial;
+        }
+        #message {
+            width: 260px;
+        }
+
+        @media (max-width: 600px){
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            .container {
+                background-color: #feddbc;
+                padding: 20px;
+                margin: 0px;
+                overflow: auto;
+            }
+            #chat {
+                float: left;
+                margin-top: 20px;
+            }
+            #joinForm{
+                display: block;
+                width: 100%;
+                float: left;
+                margin-bottom: 30px;
+            }
+            #createForm{
+                display: block;
+                width: 100%;
+                float: left;
+            }
+            .infoSquare {
+                height: 20px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                font-size: x-small;
+            }
+            .infoSquareTitle {
+                display: inline;
+            }
+            .infoSquareValue {
+                display: inline;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="join" hidden="hidden">
+        <form id="joinForm">
+            Join a game:
+            <input type="text" id="gameNumber"/>
+            <input type="submit" value="Join!" class="btn"/>
+        </form>
+        <form id="createForm">
+            Create a new game:
+            <select id="gameType">
+                <option>short</option>
+                <option>medium</option>
+                <option>long</option>
+            </select>
+            <input type="submit" value="Create!" class="btn" />
+        </form>
+    </div>
+    <div class="container" id="joinGame" hidden="hidden">
+        <form id="joinGameForm">
+            What is your name?
+            <input type="text" id="displayNameInput" />
+            <input type="submit" value="Start!" class="btn" />
+        </form>
+    </div>
+    <div class="container" id="game" hidden="hidden">
+
+        <div style="float:left;">
+            <div id="gameNumberDisplay" class="infoSquare">
+                <span class="infoSquareTitle">Game</span>
+                <span class="infoSquareValue" id="gameNumberSpan"></span>
+            </div>
+            <div id="lettersRemaining" class="infoSquare">
+                <span class="infoSquareTitle">Letters</span>
+                <span class="infoSquareValue" id="lettersRemainingSpan"></span>
+            </div>
+            <div class="infoSquare">
+                <span class="infoSquareTitle">Next</span>
+                <span class="infoSquareValue" id="timer"></span>
+            </div>
+
+            <div style="float: left; clear: left">
+                <form id="messageform">
+                    <input type="text" id="message" size="60" autocomplete="off" />
+                    <input type="submit" id="sendmessage" value="Send" class="btn" />
+                </form>
+                <div id="letterPool"></div>
+                <div id="gameDisplay" style="clear:left;"></div>
+            </div>
+        </div>
+        <div><ul id="chat"></ul></div>
+        
+    </div>
+    <div id="debug"></div>
+    <!--Script references. -->
+    <!--Reference the jQuery library. -->
+    <script src="Scripts/jquery-2.1.4.min.js"></script>
+    <!--Reference the SignalR library. -->
+    <script src="Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <!--Reference the autogenerated SignalR hub script. -->
+    <script src="/signalr/hubs"></script>
+    <!--Add script to update the page and send messages.-->
+    <script type="text/javascript">
+        $(function () {
+            // Declare a proxy to reference the hub.
+            var signalR = $.connection.bananagramsHub;
+            var gameNumber;
+            var displayName;
+            var timeRemaining;
+            var timerObject;
+            var timerInterval = 10; // seconds
+
+            function tapLetter() {
+                $('#message').val($('#message').val() + this.innerHTML);
+                //$(this).css('background-color', 'grey'); // doesn't work if words change... need to keep track of source???
+            }
+            
+            function addChatMessage(source, message) {
+                $('#chat').prepend('<li><strong>' + source + '</strong>:&nbsp;&nbsp;' + message + '</li>');
+            }
+
+            function timer() {
+                timeRemaining -= 1;
+                if (timeRemaining <= 0) {
+                    timeRemaining = 0;
+                }
+                $('#timer').text(timeRemaining.toString());
+            }
+
+            function sendMessage() {
+                var message = $('#message').val();
+
+                // Clear text box and reset focus for next comment.
+                $('#message').val('').focus();
+
+                // Call the Send method on the hub.
+                signalR.server.send(message);
+            }
+
+            // A function that the hub can call to broadcast games
+            signalR.client.broadcastGame = function (message) {
+                timerInterval = message.timerInterval;
+                $('#gameNumberSpan').html(message.gameNumber);
+                $('#nextPlayerSpan').html(message.players[message.nextPlayer].name);
+                $('#lettersRemainingSpan').html(message.numLettersRemaining);
+                $('#letterPool').empty();
+                for (var i = 0; i < message.letters.length; i++) {
+                    $('#letterPool').append("<div class=\"letter\"\">" + message.letters[i] + "</div>");
+                }
+
+                $('#gameDisplay').empty();
+
+                message.players.forEach(function (player) {
+                    // TODO: I really shouldn't mix jQuery and native element creation/modification...
+                    var d = document.createElement("div");
+                    d.className = "player";
+
+                    var name = document.createElement("span");
+                    name.innerHTML='<strong>' + player.name + '</strong> ';
+                    d.appendChild(name);
+
+                    var score = 0;
+                    player.words.forEach(function (word) {
+                        score += word.length;
+                    });
+                    var scoreSpan = document.createElement("span");
+                    scoreSpan.innerHTML = score;
+                    d.appendChild(scoreSpan);
+
+                    var ul = document.createElement("ul");
+                    ul.className = "wordList";
+                    player.words.forEach(function (word) {
+                        var li = document.createElement("li");
+                        for (i = 0; i < word.length; i++) {
+                            var letter = document.createElement("div");
+                            letter.className = "letter";
+                            var txt = document.createTextNode(word.charAt(i));
+                            letter.appendChild(txt);
+                            li.appendChild(letter);
+                        }
+                        ul.appendChild(li);
+                    });
+                    d.appendChild(ul);
+                    $('#gameDisplay').append(d);
+                });
+
+                clearInterval(timerObject);
+                if (message.timerEnabled) {
+                    timeRemaining = timerInterval;
+                    $('#timer').text(timeRemaining.toString());
+                    timerObject = setInterval(timer, 1000);
+                }
+                else {
+                    addChatMessage("Game", "Paused. Type 'p' to continue.");
+                }
+
+                if (message.numLettersRemaining == 0) {
+                    addChatMessage("Game", "No more tiles! Start a new game by typing 'new short', 'new medium', or 'new long'");
+                }
+
+                $('.letter').click(tapLetter);
+            };
+
+            // A function that the hub can call to broadcast messages
+            signalR.client.broadcastMessage = function (name, message) {
+                // Html encode display name and message. 
+                var encodedName = $('<div />').text(name).html();
+                var encodedMsg = $('<div />').text(message).html();
+                // Add the message to the page. 
+                addChatMessage(encodedName, encodedMsg);
+            };
+
+            $('#joinForm').submit(function () {
+                signalR.server.join($('#gameNumber').val()).done(function (game) {
+                    $('#joinGame').show();
+                    gameNumber = game.gameNumber.toString();
+                    $('#displayNameInput').focus();
+                });
+                $('#join').hide();
+                return false;
+            });
+
+            $('#createForm').submit(function () {
+                signalR.server.create($('#gameType').find(":selected").text()).done(function (game) {
+                    $('#joinGame').show();
+                    gameNumber = game.gameNumber.toString();
+                    $('#displayNameInput').focus();
+                });
+                $('#join').hide();
+                return false;
+            });
+
+            $('#joinGameForm').submit(function() {
+                displayName = $('#displayNameInput').val();
+                signalR.server.joinAsPlayer(gameNumber, displayName).done(function () {
+                    $('#joinGame').hide();
+                    $('#game').show();
+                    $('#message').focus();
+                });
+                return false;
+            });
+
+            $.connection.hub.start().done(function () {
+                $('#join').show();
+
+                // Set initial focus to message input box.
+                $('#gameNumber').focus();
+                // Start the connection.
+                $('#messageform').submit(function () { sendMessage(); return false; });
+            });
+        });
+    </script>
+</body>
+</html>
